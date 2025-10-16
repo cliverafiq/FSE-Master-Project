@@ -4,10 +4,11 @@ import pyttsx3
 from pymeteosource.api import Meteosource  
 from pymeteosource import types
 
-weather_api = "wxlztgj4vd4go6k5o5qasp6mzthosos146sv4ab0"
-weather_tier = 'FREE'
 
-def tts(out):
+weather_api = "wxlztgj4vd4go6k5o5qasp6mzthosos146sv4ab0"
+weather_tier = 'free'
+
+def tts(out: str):
     """
     Method for Text to Speach
     """
@@ -15,7 +16,7 @@ def tts(out):
     engine.say(out)
     engine.runAndWait()
 
-def get_time(timezone_name):
+def get_time(timezone_name: str) -> str:
     """
     Method to get time
     """
@@ -24,21 +25,34 @@ def get_time(timezone_name):
     time = current_time.strftime("%H:%M")
     return time
 
-def get_weather(lat, lon):
+def get_weather(lat: float, lon: float) -> str:
     """
     Method to get weather
     """
-    meteosource = Meteosource(weather_api, weather_tier)
-    forecast = meteosource.get_point_forecast(
-        sections=[types.sections.CURRENT],
-        units=types.units.US
-    )
-    current_weather = forecast.current
+    ms = Meteosource(weather_api, weather_tier)
+    try:
+        forecast = ms.get_point_forecast(
+            lat=lat,
+            lon=lon,
+            sections=["current"],      
+            units="us"                 
+        )
+        cw = getattr(forecast, "current", None)
+        if cw is None and isinstance(forecast, dict):
+            cw = forecast.get("current")
 
-    if current_weather:
-        temperature = current_weather.temperature
-        return(f"Current temperature: {temperature}°F")
+        if cw is None:
+            return "Current weather not available."
 
+        if hasattr(cw, "temperature"):
+            return cw.temperature
+        if isinstance(cw, dict) and "temperature" in cw:
+            return cw.temperature
+
+        return "Current weather not available."
+    except Exception as e:
+        return f"Weather error: {e}"
+    
 def main():
     time = get_time("America/Phoenix")
     print("The current time is:", time)
@@ -46,9 +60,9 @@ def main():
 
     PHOENIX_LATITUDE = 33.4484
     PHOENIX_LONGITUDE = -112.0740
-    #weather = get_weather(PHOENIX_LATITUDE, PHOENIX_LONGITUDE)
-    #print("The current weather is: ", weather)
-    #tts("The current weather is: ", weather)
+    weather = get_weather(PHOENIX_LATITUDE, PHOENIX_LONGITUDE)
+    print("The current weather is:", weather, "°F")
+    #tts("The current weather is:", weather ,"°F")
 
 if __name__ == "__main__":
     main()
