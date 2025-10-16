@@ -1,11 +1,11 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import pyttsx3
-from pymeteosource import Meteosource, types
-from pprint import pprint
+from pymeteosource.api import Meteosource  
+from pymeteosource import types
 
 weather_api = "wxlztgj4vd4go6k5o5qasp6mzthosos146sv4ab0"
-weather_tier = types.tiers.FREE
+weather_tier = 'FREE'
 
 def tts(out):
     """
@@ -46,8 +46,8 @@ def main():
 
     PHOENIX_LATITUDE = 33.4484
     PHOENIX_LONGITUDE = -112.0740
-    weather = get_weather(PHOENIX_LATITUDE, PHOENIX_LONGITUDE)
-    print("The current weather is: ", weather)
+    #weather = get_weather(PHOENIX_LATITUDE, PHOENIX_LONGITUDE)
+    #print("The current weather is: ", weather)
     #tts("The current weather is: ", weather)
 
 if __name__ == "__main__":
