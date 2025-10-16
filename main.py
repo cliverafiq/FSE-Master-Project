@@ -22,7 +22,11 @@ def get_time(timezone_name: str) -> str:
     """
     tz_info = ZoneInfo(timezone_name)
     current_time = datetime.now(tz_info)
+    # Gets current time
+
     time = current_time.strftime("%H:%M")
+    # Formats current time to Hours:Minutes
+    
     return time
 
 def get_weather(lat: float, lon: float) -> str:
@@ -30,6 +34,7 @@ def get_weather(lat: float, lon: float) -> str:
     Method to get weather
     """
     ms = Meteosource(weather_api, weather_tier)
+    # initate the Meteosource API
     try:
         forecast = ms.get_point_forecast(
             lat=lat,
@@ -37,19 +42,29 @@ def get_weather(lat: float, lon: float) -> str:
             sections=["current"],      
             units="us"                 
         )
+        # HTTP Request to the Point endpoint (refer to documentation)
+
         cw = getattr(forecast, "current", None)
+        # Ensures the interpreter access the current attribute safely
+
         if cw is None and isinstance(forecast, dict):
             cw = forecast.get("current")
+            # If version is old
 
         if cw is None:
             return "Current weather not available."
+            # Gaurd if nothing is found
 
         if hasattr(cw, "temperature"):
             return cw.temperature
+            # If Object: reads cw.temperature
+
         if isinstance(cw, dict) and "temperature" in cw:
             return cw.temperature
+            # If Dict reads cw['temperature']
 
         return "Current weather not available."
+
     except Exception as e:
         return f"Weather error: {e}"
     
