@@ -1,6 +1,20 @@
-import time
 from datetime import datetime
-import pytz
+from zoneinfo import ZoneInfo
 
-time = pytz.timezone('American/Los_Angeles')
-print(time)
+def get_time():
+    """
+    Method to get time in Phoneix
+    """
+    
+    timezone_name = "America/Phoenix"
+    tz_info = ZoneInfo(timezone_name)
+    current_time = datetime.now(tz_info)
+    time = current_time.strftime("%H:%M")
+    return time
+
+def main():
+    time = get_time()
+    print("The current time is:", time)
+
+if __name__ == "__main__":
+    main()
