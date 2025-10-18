@@ -3,6 +3,8 @@ from zoneinfo import ZoneInfo
 import pyttsx3
 from pymeteosource.api import Meteosource  
 from pymeteosource import types
+import RPi.GPIO as GPIO
+from enum import Enum
 
 
 weather_api = "wxlztgj4vd4go6k5o5qasp6mzthosos146sv4ab0"
@@ -26,7 +28,7 @@ def get_time(timezone_name: str) -> str:
 
     time = current_time.strftime("%H:%M")
     # Formats current time to Hours:Minutes
-    
+
     return time
 
 def get_weather(lat: float, lon: float) -> str:

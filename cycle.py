@@ -1,4 +1,8 @@
 import main
+from enum import Enum
+import time
+import RPi.GPIO as GPIO
+
 
 choice = input("Enter 'mod_a' or 'mod_b' to run a module: ")
 
