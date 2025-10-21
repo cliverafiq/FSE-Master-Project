@@ -3,7 +3,6 @@ from zoneinfo import ZoneInfo
 import pyttsx3
 from pymeteosource.api import Meteosource  
 from pymeteosource import types
-import RPi.GPIO as GPIO
 from enum import Enum
 
 
