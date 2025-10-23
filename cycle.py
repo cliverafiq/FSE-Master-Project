@@ -48,4 +48,7 @@ def on_button_main_pressed():
     elif cycle_dict[current_cycle] == 'Compass':
         pass
 
+button_cycle.when_pressed = on_button_cycle_pressed
+button_main.when_pressed = on_button_main_pressed
+
 pause()

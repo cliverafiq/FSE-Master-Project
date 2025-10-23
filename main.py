@@ -72,7 +72,7 @@ def get_weather(lat: float, lon: float) -> str:
 def main():
     time = get_time("America/Phoenix")
     print("The current time is:", time)
-    #tts("The current time is:", time)
+    tts(str("The current time is:"+ time))
 
     PHOENIX_LATITUDE = 33.4484
     PHOENIX_LONGITUDE = -112.0740
