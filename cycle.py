@@ -2,10 +2,11 @@ from main import tts, get_time, get_weather
 from enum import Enum
 import time
 from gpiozero import Button
+from gpiozero.pins.rpigpio import RPiGPIOFactory
 from signal import pause
 
-button_cycle = Button(17)
-button_main = Button(27)
+button_cycle = Button(17, pin_factory=RPiGPIOFactory())
+button_main = Button(27, pin_factory=RPiGPIOFactory())
 
 cycle_dict = {
     0: 'Time',
@@ -19,7 +20,7 @@ def on_button_cycle_pressed():
     Cycle through modes: Time, Temperature, Compass 
     """
     global current_cycle
-    
+
     current_cycle = current_cycle + 1
 
     if current_cycle > 2:
