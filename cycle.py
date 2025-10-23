@@ -18,6 +18,8 @@ def on_button_cycle_pressed():
     """ 
     Cycle through modes: Time, Temperature, Compass 
     """
+    global current_cycle
+    
     current_cycle = current_cycle + 1
 
     if current_cycle > 2:
