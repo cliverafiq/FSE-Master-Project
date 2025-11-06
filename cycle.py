@@ -5,8 +5,8 @@ from gpiozero import Button
 from gpiozero.pins.rpigpio import RPiGPIOFactory
 from signal import pause
 
-button_cycle = Button(17, pin_factory=RPiGPIOFactory())
-button_main = Button(27, pin_factory=RPiGPIOFactory())
+button_cycle = Button(5)
+button_main = Button(27)
 
 cycle_dict = {
     0: 'Time',

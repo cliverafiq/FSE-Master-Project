@@ -1,4 +1,5 @@
 from gpiozero import Button
+from signal import pause
 
 button1 = Button(17)
 button2 = Button(27)
@@ -11,3 +12,5 @@ def on_button2_pressed():
 
 button1.when_pressed = on_button1_pressed
 button2.when_pressed = on_button2_pressed
+
+pause()
