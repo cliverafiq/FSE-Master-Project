@@ -8,12 +8,12 @@ from enum import Enum
 
 weather_api = "wxlztgj4vd4go6k5o5qasp6mzthosos146sv4ab0"
 weather_tier = 'free'
+engine = pyttsx3.init()
 
 def tts(out: str):
     """
     Method for Text to Speach
     """
-    engine = pyttsx3.init()
     engine.say(out)
     engine.runAndWait()
 
