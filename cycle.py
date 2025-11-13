@@ -1,12 +1,15 @@
 from main import tts, get_time, get_weather
 from enum import Enum
 import time
-from gpiozero import Button
+from gpiozero import Button, PWMOutputDevice
 from gpiozero.pins.rpigpio import RPiGPIOFactory
 from signal import pause
+import random
 
 button_cycle = Button(5)
 button_main = Button(27)
+VIBRATOR_PIN = 14
+vibrator = PWMOutputDevice(VIBRATOR_PIN)
 
 cycle_dict = {
     0: 'Time',
@@ -15,6 +18,15 @@ cycle_dict = {
 }
 current_cycle = 0
 
+def vibrate():
+    """ 
+    Vibrate the device for haptic feedback 
+    """
+    vibrator = PWMOutputDevice(VIBRATOR_PIN)
+    vibrator.on()
+    time.sleep(0.5)      # Vibrate for 0.5 seconds
+    vibrator.off()       # Turn off the vibrator
+
 def on_button_cycle_pressed():
     """ 
     Cycle through modes: Time, Temperature, Compass 
@@ -22,6 +34,7 @@ def on_button_cycle_pressed():
     global current_cycle
 
     current_cycle = current_cycle + 1
+    vibrate()
 
     if current_cycle > 2:
         current_cycle = 0
@@ -33,6 +46,7 @@ def on_button_main_pressed():
     """ 
     Execute action based on current cycle
     """
+    vibrate()
     if cycle_dict[current_cycle] == 'Time':
         timezone_name = 'America/Phoenix' 
         # Using Phoenix timezone for prototyping
@@ -49,6 +63,8 @@ def on_button_main_pressed():
         tts(f"The current temperature is {temperature} degrees Fahrenheit")
 
     elif cycle_dict[current_cycle] == 'Compass':
+        direction = random.choice(['North', 'East', 'South', 'West'])
+        tts(f"You are facing {direction}")
         pass
 
 button_cycle.when_pressed = on_button_cycle_pressed
