@@ -1,15 +1,14 @@
 from main import tts, get_time, get_weather
 from enum import Enum
 import time
-from gpiozero import Button, PWMOutputDevice
+from gpiozero import Button, Buzzer
 from gpiozero.pins.rpigpio import RPiGPIOFactory
 from signal import pause
 import random
 
 button_cycle = Button(5)
 button_main = Button(27)
-VIBRATOR_PIN = 14
-vibrator = PWMOutputDevice(VIBRATOR_PIN)
+vibrator = Buzzer(14)
 
 cycle_dict = {
     0: 'Time',
@@ -22,7 +21,6 @@ def vibrate():
     """ 
     Vibrate the device for haptic feedback 
     """
-    vibrator = PWMOutputDevice(VIBRATOR_PIN)
     vibrator.on()
     time.sleep(0.5)      # Vibrate for 0.5 seconds
     vibrator.off()       # Turn off the vibrator
